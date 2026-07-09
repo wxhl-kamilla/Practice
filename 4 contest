@@ -1,0 +1,65 @@
+import sys
+
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+
+    t = int(input_data[0])
+    cursor = 1
+    answers = []
+
+    for _ in range(t):
+        n = int(input_data[cursor])
+        m = int(input_data[cursor + 1])
+        mONESY = int(input_data[cursor + 2])  # наш запас плавания
+        river_str = input_data[cursor + 3]
+        cursor += 4
+
+        # Собираем реку: берег + река + берег
+        river = ["L"] + list(river_str) + ["L"]
+
+        curr = 0
+        fail = False
+
+        while curr < n + 1:
+            if river[curr] == "L":
+                # Смотрим, куда можно прыгнуть. Ищем самое дальнее бревно
+                next_log = -1
+                for step in range(1, m + 1):
+                    if curr + step <= n + 1 and river[curr + step] == "L":
+                        next_log = curr + step
+
+                if next_log != -1:
+                    curr = next_log
+                else:
+                    # Если бревна нет, прыгаем на самый максимум вперед
+                    curr += m
+                    if curr <= n + 1 and river[curr] == "C":
+                        fail = True
+                        break
+            elif river[curr] == "W":
+                # Если мы в воде, уныло плывем по 1 метру
+                if mONESY <= 0:
+                    fail = True
+                    break
+                curr += 1
+                mONESY -= 1
+                if river[curr] == "C":
+                    fail = True
+                    break
+            else:
+                fail = True
+                break
+
+        if fail or curr < n + 1:
+            answers.append("NO")
+        else:
+            answers.append("YES")
+
+    print("\n".join(answers))
+
+
+if __name__ == "__main__":
+    solve()
