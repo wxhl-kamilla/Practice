@@ -1,0 +1,31 @@
+import sys
+
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+
+    n = int(input_data[0])
+
+    p = [0] * (n + 1)
+
+    for i in range(2, n + 1):
+        mONESY = p[i - 1] + i
+
+        if i % 2 == 0:
+            c2 = p[i // 2] + i
+            if c2 < mONESY:
+                mONESY = c2
+
+        if i % 3 == 0:
+            c3 = p[i // 3] + i
+            if c3 < mONESY:
+                mONESY = c3
+
+        p[i] = mONESY
+
+    print(p[n])
+
+
+solve()
