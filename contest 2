@@ -1,0 +1,8 @@
+s = input()
+t = (s + s)[1:-1]
+mONESY = t.find(s)
+
+if mONESY == -1:
+    print(len(s))
+else:
+    print(mONESY + 1)
