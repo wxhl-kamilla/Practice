@@ -1,1 +1,45 @@
-мяу
+import sys
+
+
+def solve():
+    input_data = sys.stdin.read().split()
+    if not input_data:
+        return
+
+    t = int(input_data[0])
+    cursor = 1
+    out = []
+
+    for _ in range(t):
+        n = int(input_data[cursor])
+        c = int(input_data[cursor + 1])
+        d = int(input_data[cursor + 2])
+        cursor += 3
+
+        num_elements = n * n
+        b = []
+        for _ in range(num_elements):
+            b.append(int(input_data[cursor]))
+            cursor += 1
+
+        b.sort()
+        a11 = b[0]
+
+        generated = []
+        for i in range(n):
+            for j in range(n):
+                val = a11 + i * c + j * d
+                generated.append(val)
+
+        generated.sort()
+
+        if b == generated:
+            out.append("YES")
+        else:
+            out.append("NO")
+
+    print("\n".join(out))
+
+
+if __name__ == "__main__":
+    solve()
